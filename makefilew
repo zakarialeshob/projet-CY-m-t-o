@@ -1,0 +1,10 @@
+all: execw
+
+functw.o: functw.c functw.h
+	gcc -c functw.c -o functw.o
+
+mainw.o: mainw.c functw.h
+	gcc -c mainw.c -o mainw.o
+
+execw: mainw.o functw.o
+	gcc mainw.o functw.o -o execw

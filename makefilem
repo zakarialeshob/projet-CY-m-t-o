@@ -1,0 +1,10 @@
+all: execm
+
+functm.o: functm.c functm.h
+	gcc -c functm.c -o functm.o
+
+mainm.o: mainm.c functm.h
+	gcc -c mainm.c -o mainm.o
+
+execm: mainm.o functm.o
+	gcc mainm.o functm.o -o execm
