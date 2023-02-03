@@ -22,14 +22,13 @@ while getopts "f:" opt; do
   esac
 done
 
-echo "Le fichier est: $file"   		#à enlever
 
 check_nb_args "$@"
 
  
 function arg_t() {
   for ((i=1; i<=$#; i++)); do
-    if [[ "${!i}" = "-t1" ]]; then				#moyenne des pressions par stations
+    if [[ "${!i}" = "-t1" ]]; then				#median pressure by stations
 		for ((j=1; j<=$#; j++)); do
 				if [[ "${!j}" = "-F" ]]; then 				#sorting France
 					awk -F, '$16 >=0 && $16 <= 96000 {sum12+=$12; if (NR == 1) { min12=$12; max12=$12;} else {if ($12<min12) {min12=$12}; if ($12>max12) {max12=$12}}} END {print $1 "," $10 "," $11 "," sprintf("%f", $12) "," sprintf("%f", sum12/NR) "," sprintf("%f", min12) "," sprintf("%f", max12)}' $file > temperature.csv
@@ -47,9 +46,9 @@ function arg_t() {
 					awk -F, '{sum12+=$12; if (NR == 1) { min12=$12; max12=$12;} else {if ($12<min12) {min12=$12}; if ($12>max12) {max12=$12}}} END {print $1 "," $10 "," $11 "," sprintf("%f", $12) "," sprintf("%f", sum12/NR) "," sprintf("%f", min12) "," sprintf("%f", max12)}' $file > temperature.csv
 				fi
 			done
-	elif [[ "${!i}" = "-t2" ]]; then			#pression moyenne par heure dans l'ordre chronologique
+	elif [[ "${!i}" = "-t2" ]]; then			#median pressur by chronological order
 		echo "Erreur syntaxe à la position $i. Veuillez réessayer."
-	elif [[ "${!i}" = "-t3" ]]; then			#les deux du haut combinés
+	elif [[ "${!i}" = "-t3" ]]; then			#both revious options combined
 		echo "Erreur syntaxe à la position $i. Veuillez réessayer."
     elif [[ "${!i}" = "-t" ]]; then
 		echo "Erreur, ajoutez les modes 1, 2 ou 3. exemple : -t2."
@@ -79,9 +78,9 @@ function arg_p() {
 				fi
 			done
 	elif [[ "${!i}" = "-p2" ]]; then
-		echo "Erreur syntaxe à la position $i. Veuillez réessayer."
+		echo "waiting for order" #temporary
 	elif [[ "${!i}" = "-p3" ]]; then
-		echo "Erreur syntaxe à la position $i. Veuillez réessayer."
+		echo "waiting for orders." #temporary
     elif [[ "${!i}" = "-p" ]]; then
 		echo "Erreur, ajoutez les modes 1, 2 ou 3. exemple : -p2."
 	fi
@@ -112,7 +111,7 @@ function arg_w() {
 	 
 		for ((k=1; k<=$#; k++)); do
 			if [[ "${!k}" = "-r" ]]; then
-				for ((n=1; n<=$#; n++)); do
+				for ((n=1; n<=$#; n++)); do			#check argument r
 					if [[ "${!n}" = "--tab" ]]; then
 						make -f makefilew
 						./execw wind.csv sorting_wind.csv r tab 				
@@ -271,8 +270,8 @@ function arg_m() {
     fi
   done
 }
-
-arg_t "$@"
+			
+arg_t "$@"			#executes every previous fuctions one by one
 arg_p "$@"
 arg_w "$@"
 arg_h "$@"
