@@ -1,6 +1,6 @@
 #include "functh.h"
 
-Node* createNode(float id1, float x1, float y1, float height1){
+Node* createNode(float id1, float x1, float y1, float height1){		//to create a new node
 	Node* node= malloc(sizeof(Node));
 	if(node==NULL){
 		exit(1);
@@ -13,7 +13,7 @@ Node* createNode(float id1, float x1, float y1, float height1){
 	return node;
 }
 
-Node* addEnd(Node* pliste, float id, float x, float y, float height){
+Node* addEnd(Node* pliste, float id, float x, float y, float height){		// add at the end the new node
 	Node* nodeend = createNode(id, x, y, height);
 	if(pliste==NULL){
 		pliste= nodeend;
@@ -28,7 +28,7 @@ Node* addEnd(Node* pliste, float id, float x, float y, float height){
 	return pliste;
 }
 
-Node* sortNode(Node* pliste){
+Node* sortNode(Node* pliste){		//to sort the list 
 	if (pliste==NULL){
 		exit(0);
 	}
@@ -55,7 +55,7 @@ Node* sortNode(Node* pliste){
 	return pliste;
 }
 
-Node* sortNodeR(Node* pliste){
+Node* sortNodeR(Node* pliste){		//to sort the list with "r"
 	if (pliste==NULL){
 		exit(0);
 	}
@@ -63,7 +63,7 @@ Node* sortNodeR(Node* pliste){
 	float id1, x1, y1, height1;
 	for (current = pliste; current->next != NULL; current = current->next) {
 		for (index = current->next; index != NULL; index = index->next) {
-			if (current->height < index->height) {
+			if (current->height > index->height) {
 				id1 = current->id;
 				x1 = current->x;
 				y1 = current->y;
