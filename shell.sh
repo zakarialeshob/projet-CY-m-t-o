@@ -277,3 +277,9 @@ arg_w "$@"
 arg_h "$@"
 arg_m "$@"
 
+if [ "$t1" = "-t1" ]; then #variable for gnuplot
+        ./t1.sh
+fi
+if [ "$p1" = "-p1" ]; then
+	./p1.sh
+fi
