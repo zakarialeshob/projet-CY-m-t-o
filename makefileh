@@ -1,0 +1,10 @@
+all: exech
+
+functh.o: functh.c functh.h
+	gcc -c functh.c -o functh.o
+
+mainh.o: mainh.c functh.h
+	gcc -c mainh.c -o mainh.o
+
+exech: mainh.o functh.o
+	gcc mainh.o functh.o -o exech
